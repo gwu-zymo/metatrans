@@ -9,6 +9,8 @@ params.sourmashdbPath = '/mnt/gwu/metatrans_nf/reference_db.sbt.json'
 
 // Define processes
 process trimReads {
+    container 'quay.io/biocontainers/trimmomatic'
+
     input:
     tuple val(sample), path(reads)
 
