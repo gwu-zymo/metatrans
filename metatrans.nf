@@ -28,6 +28,8 @@ process trimReads {
 }
 
 process removeRrna {
+    container 'quay.io/biocontainers/ribodetector'
+    
     input:
     tuple val(sample), path(reads)
 
@@ -42,6 +44,8 @@ process removeRrna {
 }
 
 process pairReads {
+    container 'quay.io/biocontainers/fastp'
+
     input:
     tuple val(sample), path(reads)
 
@@ -55,6 +59,8 @@ process pairReads {
 }
 
 process assembleTranscripts {
+    container 'quay.io/biocontainers/metaspades'
+
     input:
     tuple val(sample), path(reads)
 
@@ -69,6 +75,7 @@ process assembleTranscripts {
 }
 
 process annotateGenes {
+    container 'quay.io/biocontainers/prokka'
     publishDir '.', mode: 'copy', pattern: '*.faa'
 
     input:
@@ -86,6 +93,8 @@ process annotateGenes {
 }
 
 process functionalAnnotation {
+    container 'quay.io/biocontainers/diamond'
+
     input:
     tuple val(sample), path(reads)
 
@@ -99,6 +108,7 @@ process functionalAnnotation {
 }
 
 process identifySpecies {
+    container 'quay.io/biocontainers/sourmash'
     publishDir '.', mode: 'copy', pattern: '*_species.txt'
 
     input:
